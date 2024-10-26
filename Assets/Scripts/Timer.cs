@@ -37,6 +37,15 @@ public class Timer : MonoBehaviour
                     text_timer.text = string.Format("{0:00}:{1:00}", minutes, seconds); // "00:00" 형식으로 시간 표시
 
                     leftTime -= Time.deltaTime;
+
+                    int nowMinutes = Mathf.FloorToInt(nowTime / 60);
+                    int nowSeconds = Mathf.FloorToInt(nowTime % 60);
+                    text_elapseTime.text = string.Format("{0:00}:{1:00}", nowMinutes, nowSeconds);
+                    nowTime += Time.deltaTime;
+
+                    PlayerPrefs.SetInt("elapsedMinutes", nowMinutes);
+                    PlayerPrefs.SetInt("elapsedSeconds", nowSeconds);
+                    PlayerPrefs.Save();
                 }
                 else
                 {
@@ -49,16 +58,13 @@ public class Timer : MonoBehaviour
                 int minutes = Mathf.FloorToInt(nowTime / 60); //남은 시간을 분으로 변환
                 int seconds = Mathf.FloorToInt(nowTime % 60); //남은 시간을 초로 변환
                 text_timer.text = string.Format("{0:00}:{1:00}", minutes, seconds); // "00:00" 형식으로 시간 표시
-                
-                //nowTime += Time.deltaTime;
-            }
-            int nowMinutes = Mathf.FloorToInt(nowTime / 60);
-            int nowSeconds = Mathf.FloorToInt(nowTime % 60);
-            text_elapseTime.text = string.Format("{0:00}:{1:00}", nowMinutes, nowSeconds);
 
-            nowTime += Time.deltaTime;
-        }
-            
+                int nowMinutes = Mathf.FloorToInt(nowTime / 60);
+                int nowSeconds = Mathf.FloorToInt(nowTime % 60);
+                text_elapseTime.text = string.Format("{0:00}:{1:00}", nowMinutes, nowSeconds);
+                nowTime += Time.deltaTime;
+            }
+        }    
     }
     void GameOver()
     {

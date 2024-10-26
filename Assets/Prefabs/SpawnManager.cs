@@ -33,6 +33,7 @@ public class SpawnManager : MonoBehaviour
     private int endWaveNumber = 1;
     private float startGameNum = 2f;
     private int randomEnemyCount;
+    private int currentWave = 0;
 
     private bool isSettingOpen = false;
     private bool isMovemenetStop = false;
@@ -134,12 +135,18 @@ public class SpawnManager : MonoBehaviour
             if (MoveScene.endlessMode)
             {
                 text_wave.text = waveNumber.ToString() + " Wave ";
+                currentWave = waveNumber;
+                if(waveNumber < currentWave)
+                {
+                    PlayerPrefs.SetInt("waveNumber", waveNumber);
+                    PlayerPrefs.Save();
+                }
             }
             else if(MoveScene.timeAttackMode)
             {
                 text_wave.text = waveNumber.ToString() + " / " + endWaveNumber.ToString();
             }
-            text_waveCount.text = waveNumber.ToString();
+            text_waveCount.text = waveNumber.ToString() + " Wave";
             text_destoryEnemyCount.text = destroyEnemy.ToString();
         }
     }
