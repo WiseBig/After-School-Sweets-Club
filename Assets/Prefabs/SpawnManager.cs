@@ -39,7 +39,8 @@ public class SpawnManager : MonoBehaviour
     private bool isMovemenetStop = false;
     private bool isSettingOpens = false;
     private bool isMovementStop = false;
-    private bool gameClear = false;
+
+    public bool gameClear = false;
     
     private PlayerController playerController;
     private Rigidbody[] playerRigidbodies;
@@ -135,8 +136,9 @@ public class SpawnManager : MonoBehaviour
             if (MoveScene.endlessMode)
             {
                 text_wave.text = waveNumber.ToString() + " Wave ";
-                currentWave = waveNumber;
-                if(waveNumber < currentWave)
+                currentWave = PlayerPrefs.GetInt("waveNumber", 0);
+
+                if(waveNumber > currentWave)
                 {
                     PlayerPrefs.SetInt("waveNumber", waveNumber);
                     PlayerPrefs.Save();

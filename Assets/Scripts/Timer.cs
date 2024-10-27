@@ -11,6 +11,9 @@ public class Timer : MonoBehaviour
     public Text text_timer;
     public Text text_elapseTime;
 
+    private int currentMinutes;
+    private int currentSeconds;
+
     private PlayerController playerController;
     private SpawnManager spawnManager;
 
@@ -43,9 +46,16 @@ public class Timer : MonoBehaviour
                     text_elapseTime.text = string.Format("{0:00}:{1:00}", nowMinutes, nowSeconds);
                     nowTime += Time.deltaTime;
 
-                    PlayerPrefs.SetInt("elapsedMinutes", nowMinutes);
-                    PlayerPrefs.SetInt("elapsedSeconds", nowSeconds);
-                    PlayerPrefs.Save();
+                    if(spawnManager.gameClear)
+                    {
+                        currentMinutes = PlayerPrefs.GetInt("elapsedMinutes", int.MaxValue);
+                        currentSeconds = PlayerPrefs.GetInt("elapsedSeconds", int.MaxValue);
+
+                        if (nowMinutes < currentMinutes || (nowMinutes == currentMinutes && nowSeconds < currentSeconds))
+                            PlayerPrefs.SetInt("elapsedMinutes", nowMinutes);
+                        PlayerPrefs.SetInt("elapsedSeconds", nowSeconds);
+                        PlayerPrefs.Save();
+                    }
                 }
                 else
                 {
